@@ -142,34 +142,48 @@
   </div>
 
   <script>
-    fetch("https://opensheet.elk.sh/1yxyVp8UAs8qnR68xDDUVGdmt9a-_yxnzNNRul9CMQyQ/Página1")
-      .then(response => response.json())
-      .then(dados => {
-        dados.sort((a, b) => b.Vendas - a.Vendas);
+    <script>
+  fetch("https://opensheet.elk.sh/1yxyVp8UAs8qnR68xDDUVGdmt9a-_yxnzNNRul9CMQyQ/Página1")
+    .then(response => response.json())
+    .then(dados => {
 
-        const ranking = document.getElementById("ranking");
-        ranking.innerHTML = "";
+      // Converte vendas para número e ordena
+      dados.forEach(p => p.Vendas = Number(p.Vendas));
+      dados.sort((a, b) => b.Vendas - a.Vendas);
 
-        dados.forEach((pessoa, index) => {
-          const li = document.createElement("li");
+      const ranking = document.getElementById("ranking");
+      ranking.innerHTML = "";
 
-          if (index === 0) li.classList.add("first");
-          if (index === 1) li.classList.add("second");
-          if (index === 2) li.classList.add("third");
+      const maiorVenda = Math.max(...dados.map(p => p.Vendas));
+      const temGanhador = maiorVenda > 0;
 
-          li.innerHTML = `
-            <div class="trophy">
-              ${index === 0 ? '<div class="trophy-icon">🏆</div>' : ''}
-              <strong>${pessoa.Nome}</strong>
-            </div>
-            <span>${pessoa.Vendas} vendas</span>
-            ${index === 0 ? '<div class="badge">1º LUGAR</div>' : ''}
-          `;
+      dados.forEach((pessoa, index) => {
+        const li = document.createElement("li");
 
-          ranking.appendChild(li);
-        });
+        // Conteúdo base
+        li.innerHTML = `
+          <strong>${pessoa.Nome}</strong>
+          <span>${pessoa.Vendas} vendas</span>
+        `;
+
+        // Só destaca se existir ganhador
+        if (temGanhador) {
+          if (index === 0 && pessoa.Vendas === maiorVenda) {
+            li.classList.add("primeiro");
+            li.innerHTML = `
+              <strong>🏆 ${pessoa.Nome}</strong>
+              <span>${pessoa.Vendas} vendas</span>
+            `;
+          }
+        }
+
+        ranking.appendChild(li);
       });
+    });
+</script>
+
   </script>
 
 </body>
 </html>
+
