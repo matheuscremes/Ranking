@@ -181,9 +181,88 @@
       });
     });
 </script>
+    <script>
+  fetch("https://opensheet.elk.sh/1yxyVp8UAs8qnR68xDDUVGdmt9a-_yxnzNNRul9CMQyQ/Página1")
+    .then(response => response.json())
+    .then(dados => {
+
+      // Converte vendas para número e ordena
+      dados.forEach(p => p.Vendas = Number(p.Vendas));
+      dados.sort((a, b) => b.Vendas - a.Vendas);
+
+      const ranking = document.getElementById("ranking");
+      ranking.innerHTML = "";
+
+      const maiorVenda = Math.max(...dados.map(p => p.Vendas));
+      const temGanhador = maiorVenda > 0;
+
+      dados.forEach((pessoa, index) => {
+        const li = document.createElement("li");
+
+        // Conteúdo base
+        li.innerHTML = `
+          <strong>${pessoa.Nome}</strong>
+          <span>${pessoa.Vendas} vendas</span>
+        `;
+
+        // Só destaca se existir ganhador
+        if (temGanhador) {
+          if (index === 0 && pessoa.Vendas === maiorVenda) {
+            li.classList.add("primeiro");
+            li.innerHTML = `
+              <strong>🏆 ${pessoa.Nome}</strong>
+              <span>${pessoa.Vendas} vendas</span>
+            `;
+          }
+        }
+
+        ranking.appendChild(li);
+      });
+    });
+</script>
+    <script>
+  fetch("https://opensheet.elk.sh/1yxyVp8UAs8qnR68xDDUVGdmt9a-_yxnzNNRul9CMQyQ/Página1")
+    .then(response => response.json())
+    .then(dados => {
+
+      // Converte vendas para número e ordena
+      dados.forEach(p => p.Vendas = Number(p.Vendas));
+      dados.sort((a, b) => b.Vendas - a.Vendas);
+
+      const ranking = document.getElementById("ranking");
+      ranking.innerHTML = "";
+
+      const maiorVenda = Math.max(...dados.map(p => p.Vendas));
+      const temGanhador = maiorVenda > 0;
+
+      dados.forEach((pessoa, index) => {
+        const li = document.createElement("li");
+
+        // Conteúdo base
+        li.innerHTML = `
+          <strong>${pessoa.Nome}</strong>
+          <span>${pessoa.Vendas} vendas</span>
+        `;
+
+        // Só destaca se existir ganhador
+        if (temGanhador) {
+          if (index === 0 && pessoa.Vendas === maiorVenda) {
+            li.classList.add("primeiro");
+            li.innerHTML = `
+              <strong>🏆 ${pessoa.Nome}</strong>
+              <span>${pessoa.Vendas} vendas</span>
+            `;
+          }
+        }
+
+        ranking.appendChild(li);
+      });
+    });
+</script>
 
   </script>
 
 </body>
 </html>
+
 
